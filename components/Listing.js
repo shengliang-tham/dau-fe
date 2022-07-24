@@ -1,15 +1,29 @@
 import { Modal, Input, Row, Checkbox, Button, Text } from "@nextui-org/react";
 import { useState } from "react";
 import { ethers } from "ethers";
+import LearnABI from "../contract/LearnABI.json";
 
 export default function Listing() {
   const makePayment = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const tx = signer.sendTransaction({
-      to: "0x2f5868EB4286C10dEC09D4Ec401E37C4Ca2B330F",
-      value: ethers.utils.parseEther("1.0"),
-    });
+    // const tx = signer.sendTransaction({
+    //   to: "0xEC5127d1339345872207B89f05D61e87c7C5f5C7",
+    //   value: ethers.utils.parseEther("1.0"),
+    // });
+
+    const contract = new ethers.Contract(
+      "0x333ba822E8994F2C6a308f47A54a64AFEB6f8077",
+      LearnABI,
+      provider
+    );
+
+    const numberOfDecimals = 18;
+    const numberOfTokens = ethers.utils.parseUnits("0.05", numberOfDecimals);
+
+    await contract
+      .connect(signer)
+      .transfer("0xEC5127d1339345872207B89f05D61e87c7C5f5C7", numberOfTokens);
   };
 
   return (
@@ -137,7 +151,7 @@ export default function Listing() {
             <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
             <div class="flex">
               <span class="title-font font-medium text-2xl text-gray-900">
-                1 LEARN Token
+                0.05 LEARN Token
               </span>
               <button
                 class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
