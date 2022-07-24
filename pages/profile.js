@@ -1,12 +1,12 @@
+import Navbar from "../components/Navbar";
 import styles from "../styles/Home.module.css";
 import CreatorPage from "./creator";
 import Homepage from "./homepage";
 
-export default function Home() {
+export default function Profile() {
   return (
     <div className={styles.container}>
-      <Homepage />
-      {/* <CreatorPage /> */}
+      <Navbar />
     </div>
   );
 }
